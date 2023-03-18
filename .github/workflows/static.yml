@@ -39,8 +39,10 @@ jobs:
       - name: Install dependency
         run: yarn
       - name: Build
-        run: yarn react-scripts build
-        
+        run: GENERATE_SOURCEMAP=false REACT_APP_ROUTE_BASENAME='deckgl-grayscale16bpp-bitmaplayer' yarn react-scripts build
+        env:
+            CI: false
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
