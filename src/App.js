@@ -167,12 +167,14 @@ function App() {
       bounds: [95.0, 60.0, 110.0, 20.0],
       _imageCoordinateSystem: COORDINATE_SYSTEM.LNGLAT,
       image: texture['grayscale8bpp'],
+      opacity: 0.75,
     }),
     new BitmapLayer({
       id: "rgba8bpp-bitmap-layer",
       bounds: [70.0, 60.0, 90.0, 20.0],
       _imageCoordinateSystem: COORDINATE_SYSTEM.LNGLAT,
       image: texture['rgba8bpp'],
+      opacity: 0.75,
     }),
 
     new Grayscale16bppBitmapLayer({
@@ -180,6 +182,7 @@ function App() {
       bounds: [120.0, 60.0, 160.0, 20.0],
       _imageCoordinateSystem: COORDINATE_SYSTEM.LNGLAT,
       image: texture['grayscale16bpp'],
+      opacity: 0.75,
       lower: 0.0,
       upper: 65535.0,
       gamma: 1.0,
