@@ -4,6 +4,8 @@
 
 [Live Demo](https://seotaro.github.io/deckgl-grayscale16bpp-bitmaplayer/)
 
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/46148606/226151583-fd146b8e-a70a-42b6-a15c-65d11eed9c33.png">
+
 ## Install
 
 ```bash
