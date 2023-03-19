@@ -72,6 +72,35 @@ const createRGBA32bppTexture = (gl) => {
   return texture;
 }
 
+// RGB 24bpp のテクスチャを生成する
+const createRGB24bppTexture = (gl) => {
+  // 緯度方向にグラデーション（線形補間）させる
+  const src = new Uint8Array(WIDTH * 3 * HEIGHT);
+  for (let j = 0; j < HEIGHT; j++) {
+    const luminance = j / HEIGHT * 0xff;
+    const pixel = new Uint8Array([luminance, luminance, luminance]);
+
+    const line = new Uint8Array(WIDTH * 3);
+    for (let i = 0; i < WIDTH; i++) {
+      line.set(pixel, i * 3);
+    }
+    src.set(line, WIDTH * 3 * j);
+  }
+
+  const texture = new Texture2D(gl, {
+    data: src,
+    format: GL.RGB,
+    type: GL.UNSIGNED_BYTE,
+    width: WIDTH,
+    height: HEIGHT,
+    parameters: { ...DEFAULT_TEXTURE_PARAMETERS },
+    pixelStore: { [GL.UNPACK_ALIGNMENT]: 1 },
+    mipmaps: true,
+  });
+
+  return texture;
+}
+
 // Grayscale 8bpp のテクスチャを生成する
 const createGrayscale8bppTexture = (gl) => {
   // 緯度方向にグラデーション（線形補間）させる
@@ -132,6 +161,7 @@ const createGrayscale16bppTexture = (gl) => {
 function App() {
   const [gl, setGl] = useState(null);
   const [texture, setTexture] = useState({
+    'rgb24bpp': null,
     'rgba32bpp': null,
     'grayscale8bpp': null,
     'grayscale16bpp': null
@@ -140,6 +170,7 @@ function App() {
   useEffect(() => {
     if (gl != null) {
       setTexture({
+        'rgb24bpp': createRGB24bppTexture(gl),
         'rgba32bpp': createRGBA32bppTexture(gl),
         'grayscale8bpp': createGrayscale8bppTexture(gl),
         'grayscale16bpp': createGrayscale16bppTexture(gl)
@@ -164,16 +195,23 @@ function App() {
 
     new BitmapLayer({
       id: "grayscale8bpp-bitmap-layer",
-      bounds: [95.0, 60.0, 110.0, 20.0],
+      bounds: [100.0, 60.0, 109.0, 20.0],
       _imageCoordinateSystem: COORDINATE_SYSTEM.LNGLAT,
       image: texture['grayscale8bpp'],
       opacity: 0.75,
     }),
     new BitmapLayer({
       id: "rgba32bpp-bitmap-layer",
-      bounds: [70.0, 60.0, 90.0, 20.0],
+      bounds: [90.0, 60.0, 99.0, 20.0],
       _imageCoordinateSystem: COORDINATE_SYSTEM.LNGLAT,
       image: texture['rgba32bpp'],
+      opacity: 0.75,
+    }),
+    new BitmapLayer({
+      id: "rgb24bpp-bitmap-layer",
+      bounds: [80.0, 60.0, 89.0, 20.0],
+      _imageCoordinateSystem: COORDINATE_SYSTEM.LNGLAT,
+      image: texture['rgb24bpp'],
       opacity: 0.75,
     }),
 
