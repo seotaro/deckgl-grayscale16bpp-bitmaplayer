@@ -43,8 +43,8 @@ const DEFAULT_TEXTURE_PARAMETERS = {
   [GL.TEXTURE_WRAP_T]: GL.CLAMP_TO_EDGE,
 };
 
-// RGBA 8bpp のテクスチャを生成する
-const createRGBA8bppTexture = (gl) => {
+// RGBA 32bpp のテクスチャを生成する
+const createRGBA32bppTexture = (gl) => {
   // 緯度方向にグラデーション（線形補間）させる
   const src = new Uint8Array(WIDTH * 4 * HEIGHT);
   for (let j = 0; j < HEIGHT; j++) {
@@ -132,7 +132,7 @@ const createGrayscale16bppTexture = (gl) => {
 function App() {
   const [gl, setGl] = useState(null);
   const [texture, setTexture] = useState({
-    'rgba8bpp': null,
+    'rgba32bpp': null,
     'grayscale8bpp': null,
     'grayscale16bpp': null
   });
@@ -140,7 +140,7 @@ function App() {
   useEffect(() => {
     if (gl != null) {
       setTexture({
-        'rgba8bpp': createRGBA8bppTexture(gl),
+        'rgba32bpp': createRGBA32bppTexture(gl),
         'grayscale8bpp': createGrayscale8bppTexture(gl),
         'grayscale16bpp': createGrayscale16bppTexture(gl)
       });
@@ -170,10 +170,10 @@ function App() {
       opacity: 0.75,
     }),
     new BitmapLayer({
-      id: "rgba8bpp-bitmap-layer",
+      id: "rgba32bpp-bitmap-layer",
       bounds: [70.0, 60.0, 90.0, 20.0],
       _imageCoordinateSystem: COORDINATE_SYSTEM.LNGLAT,
-      image: texture['rgba8bpp'],
+      image: texture['rgba32bpp'],
       opacity: 0.75,
     }),
 
